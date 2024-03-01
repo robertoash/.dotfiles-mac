@@ -1,0 +1,61 @@
+# Ignore everything
+*
+
+# Except for these files...
+!.gitignore
+!all-packages.txt
+!/README.md
+!config.nix
+!karabiner.json
+!nix.conf
+!rofimoji.rc
+!helpers.rc
+!resh.toml
+
+# ...and these directories...
+!alacritty/
+!amethyst/
+!gh/
+!gh-copilot/
+!karabiner/
+!nano/
+!neofetch/
+!nix/
+!nixpkgs/
+!nvim/
+!scripts/
+!shell_gpt/
+!thefuck/
+!tmux/
+!vim/
+!zellij/
+!zsh/
+
+# ...as well as any subfolders in them and their contents...
+!alacritty/**/*
+!amethyst/**/*
+!gh/**/*
+!gh-copilot/**/*
+!nano/**/*
+!neofetch/**/*
+!nvim/**/*
+!scripts/**/*
+!shell_gpt/**/*
+!thefuck/**/*
+!tmux/**/*
+!vim/**/*
+!zellij/**/*
+!zsh/**/*
+
+# ... but not these.
+.env
+.python-version
+.sgptrc
+.zcompcache
+.zsh_history
+.zsh_sessions
+__pycache__
+.zcompdump
+venv/
+zsh/.oda.zsh
+zsh/.zshrc.save

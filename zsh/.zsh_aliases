@@ -1,0 +1,38 @@
+# #################################
+# # Aliases
+# #################################
+
+## Shell aliases
+#[ -f "${XDG_CONFIG_HOME}/shell/aliases" ] && source "${XDG_CONFIG_HOME}/shell/aliases"
+
+## Backup
+alias "bkup_packages"="~/.config/scripts/backup/package_requirements.py"
+
+## App aliases
+# Brew
+alias bubu="brew update && brew outdated && brew upgrade && brew cleanup"
+# CNN
+alias cnn='youtube-dl $(yt-dlp --quiet -g https://www.livenewsnow.com/american/cnn-news-usa.html --add-header "Referer: https://www.livenewsnow.com/" --no-warnings) --add-header "Referer: https://www.livenewsnow.com/" -o - | mpv -'
+# Exa
+alias ll="eza --all --color=always --icons --group-directories-first --git -Hah"
+alias lll="ll -l -a"
+alias lls="lll -s size"
+alias llt="ll -T -L"
+# Github Copilot
+alias "??"="gh copilot suggest -t shell "
+alias "??g"="gh copilot suggest -t git "
+alias "??gh"="gh copilot suggest -t gh "
+alias "??x"="gh copilot explain "
+# Gtime
+alias "time"="gtime"
+# Lazygit
+alias "lg"="lazygit"
+# Mullvad
+alias "mcon"="mullvad connect"
+alias "mdis"="mullvad disconnect"
+alias "mst"="mullvad status"
+#Other
+alias vim="vim -u ~/.config/vim/vimrc"
+# Docker Scripts
+#alias "dsp"="bash ~/.config/scripts/docker/docker_simple.sh"
+#alias "drdp"="bash ~/.config/scripts/docker/docker_redeploy_container.sh"
