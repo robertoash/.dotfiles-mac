@@ -3,7 +3,7 @@
 # #################################
 
 ## Shell aliases
-#[ -f "${XDG_CONFIG_HOME}/shell/aliases" ] && source "${XDG_CONFIG_HOME}/shell/aliases"
+[ -f "${XDG_CONFIG_HOME}/shell/aliases" ] && source "${XDG_CONFIG_HOME}/shell/aliases"
 
 ## Backup
 alias "bkup_packages"="~/.config/scripts/backup/package_requirements.py"
