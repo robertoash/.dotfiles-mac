@@ -25,11 +25,6 @@ style = "Italic"
 family = "JetBrainsMono NF"
 style = "Regular"
 
-#[[keyboard.bindings]]
-#action = "SpawnNewInstance"
-#key = "Return"
-#mods = "Super|Shift"
-
 [keyboard]
 bindings = [
   { key = "Return", mods = "Super|Shift", action = "SpawnNewInstance" },
@@ -38,19 +33,26 @@ bindings = [
   { key = "End", mods = "None", chars = "\u001bOF" }
 ]
 
+[mouse]
+
+hide_when_typing = true  # Default: false
+# Example: bindings = [{ mouse = "Left", action = "Paste" }]
+bindings = []
+
 [scrolling]
 history = 10000
 multiplier = 3
 
 [selection]
-save_to_clipboard = false
+save_to_clipboard = true
 
 [shell]
-program = "tmux"
-#program = "/bin/zsh"
+program = "/bin/zsh"
+args = ["-l", "-c", "zellij attach --index 0 || zellij"]
 
 [window]
 opacity = 1
+option_as_alt = "Both"
 
 [window.class]
 general = "Alacritty"

@@ -51,6 +51,7 @@ HISTFILE=~/.config/zsh/.zsh_history
 export EDITOR="nano"
 export TERMINAL="alacritty"
 export _Z_DATA=~/.config/z/.z
+export ZELLIJ_CONFIG_FILE=~/.config/zellij/config.kdl
 
 # Set correct python for Gcloud
 export GCLOUDSDK_PYTHON='/Users/robertoash/.asdf/shims/python'
