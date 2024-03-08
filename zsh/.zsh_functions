@@ -1,35 +1,46 @@
 sgpt() {
     case "$1" in
         commit)
-            shift # Remove 'commit' from the arguments
+            case "$2" in
+                create)
+                    shift 2 # Remove 'commit create' from the arguments
 
-            local TEMP_FILE=$(mktemp)
-            # Ensure the temp file is removed upon exit
-            trap "rm -f '$TEMP_FILE'" EXIT
+                    local TEMP_FILE=$(mktemp)
+                    trap "rm -f '$TEMP_FILE'" EXIT
 
-            # Generate the commit message and save it to TEMP_FILE
-            git diff --cached | sgpt "Create a concise commit message. Just facts without embellishment" > "$TEMP_FILE"
+                    git diff --cached | sgpt "Create a concise commit message. Just facts without embellishment" > "$TEMP_FILE"
 
-            # Trim all leading and trailing newlines
-            awk 'BEGIN {RS=""; FS="\n"} {gsub(/^\n+|\n+$/, ""); print}' "$TEMP_FILE" > "$TEMP_FILE.tmp" && mv "$TEMP_FILE.tmp" "$TEMP_FILE"
+                    awk 'BEGIN {RS=""; FS="\n"} {gsub(/^\n+|\n+$/, ""); print}' "$TEMP_FILE" > "$TEMP_FILE.tmp" && mv "$TEMP_FILE.tmp" "$TEMP_FILE"
 
-            # Open the editor
-            ${EDITOR:-nano} "$TEMP_FILE"
+                    ${EDITOR:-nano} "$TEMP_FILE"
 
-            # After editing, prompt the user for confirmation
-            echo "Do you want to proceed with the commit? [y/n]"
-            read -r user_input
+                    echo "Do you want to proceed with the commit? [y/n]"
+                    read -r user_input
 
-            case "$user_input" in
-                y|Y)
-                    if [ -s "$TEMP_FILE" ]; then  # Check if file is not empty
-                        git commit -F "$TEMP_FILE"
-                    else
-                        echo "Commit message is empty. Aborting commit."
-                    fi
+                    case "$user_input" in
+                        y|Y)
+                            if [ -s "$TEMP_FILE" ]; then
+                                git commit -F "$TEMP_FILE"
+                            else
+                                echo "Commit message is empty. Aborting commit."
+                            fi
+                            ;;
+                        *)
+                            echo "Commit aborted by user."
+                            ;;
+                    esac
+                    ;;
+                message)
+                    local TEMP_FILE=$(mktemp)
+                    trap "rm -f '$TEMP_FILE'" EXIT
+
+                    git diff --cached | sgpt "Create a concise commit message. Just facts without embellishment" > "$TEMP_FILE"
+
+                    # Trim and print to stdout instead of editing
+                    awk 'BEGIN {RS=""; FS="\n"} {gsub(/^\n+|\n+$/, ""); print}' "$TEMP_FILE"
                     ;;
                 *)
-                    echo "Commit aborted by user."
+                    echo "Unsupported commit command: $2"
                     ;;
             esac
             ;;
@@ -49,7 +60,7 @@ sgpt() {
                     git diff origin/main . > "$TEMP_FILE"
 
                     # Pass the diff to sgpt with an appropriate prompt.
-                    sgpt "Create a PR title and description based on the following changes:" < "$TEMP_FILE" > "$TEMP_FILE.msg"
+                    sgpt "Create a PR title and a concise description, without embellishment, based on the following changes. I will expect the first line to be the title and the rest to be the description." < "$TEMP_FILE" > "$TEMP_FILE.msg"
 
                     # Open the message in the editor for review and confirmation.
                     ${EDITOR:-nano} "$TEMP_FILE.msg"
@@ -89,6 +100,21 @@ sgpt() {
                     cat "$TEMP_FILE"
                     ;;
 
+                message)
+                    local TEMP_FILE=$(mktemp)
+                    trap "rm -f '$TEMP_FILE'" EXIT
+
+                    git diff origin/main . > "$TEMP_FILE"
+
+                    sgpt "Create a PR title and a description based on the following changes. For the description, bullet points are better than paragraph form. I will expect the first line to be the title and the rest to be the description. No labels ("Title:", "Description:") are to be included in the response." < "$TEMP_FILE" > "$TEMP_FILE.msg"
+
+                    # Ensure correct separation and printing of title and description
+                    local PR_TITLE=$(head -n 1 "$TEMP_FILE.msg")
+                    local PR_BODY=$(tail -n +2 "$TEMP_FILE.msg" | awk '{if(NR>1)print}' ORS='\n')
+
+                    echo -e "PR Title:\n$PR_TITLE\n"
+                    echo -e "PR Description:\n$PR_BODY"
+                    ;;
                 *)
                     echo "Unsupported pr command: $2"
                     ;;
