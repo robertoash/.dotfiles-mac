@@ -18,6 +18,7 @@
 !gh/
 !gh-copilot/
 !karabiner/
+!lazygit/
 !nano/
 !neofetch/
 !nix/
@@ -36,6 +37,7 @@
 !amethyst/**/*
 !gh/**/*
 !gh-copilot/**/*
+!lazygit/**/*
 !nano/**/*
 !neofetch/**/*
 !nvim/**/*
@@ -56,6 +58,7 @@
 .zsh_sessions
 __pycache__
 .zcompdump
+state.yml
 venv/
 zsh/.oda.zsh
 zsh/.zshrc.save
