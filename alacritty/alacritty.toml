@@ -27,14 +27,15 @@ style = "Regular"
 
 [keyboard]
 bindings = [
-  { key = "Return", mods = "Super|Shift", action = "SpawnNewInstance" },
+  { key = "Return", mods = "Super|Control|Alt", action = "SpawnNewInstance" },
   { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
   { key = "Home", mods = "None", chars = "\u001bOH" },
-  { key = "End", mods = "None", chars = "\u001bOF" }
+  { key = "End", mods = "None", chars = "\u001bOF" },
+  { key = "8", mods = "Super|Control|Alt", chars = "["},
+  { key = "8", mods = "Super|Control|Alt", chars = "]"}
 ]
 
 [mouse]
-
 hide_when_typing = true  # Default: false
 # Example: bindings = [{ mouse = "Left", action = "Paste" }]
 bindings = []
