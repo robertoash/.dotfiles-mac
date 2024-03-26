@@ -8,8 +8,10 @@ sgpt() {
                     local TEMP_FILE=$(mktemp)
                     trap "rm -f '$TEMP_FILE'" EXIT
 
+                    # Generate commit message based on staged changes
                     git diff --cached | sgpt "Create a concise commit message. Just facts without embellishment" > "$TEMP_FILE"
 
+                    # Clean up message format
                     awk 'BEGIN {RS=""; FS="\n"} {gsub(/^\n+|\n+$/, ""); print}' "$TEMP_FILE" > "$TEMP_FILE.tmp" && mv "$TEMP_FILE.tmp" "$TEMP_FILE"
 
                     ${EDITOR:-nano} "$TEMP_FILE"
@@ -56,8 +58,11 @@ sgpt() {
                         DRAFT_FLAG="--draft"
                     fi
 
-                    # Generate diff against origin/main and save to a temp file.
-                    git diff origin/main . > "$TEMP_FILE"
+                    # Fetch the latest changes from the remote without merging them
+                    git fetch origin main:main --no-tags
+
+                    # Generate a diff of your current branch against the fetched remote main branch
+                    git diff FETCH_HEAD > "$TEMP_FILE"
 
                     # Pass the diff to sgpt with an appropriate prompt.
                     sgpt "Create a PR title and a concise description, without embellishment, based on the following changes. I will expect the first line to be the title and the rest to be the description." < "$TEMP_FILE" > "$TEMP_FILE.msg"
@@ -71,7 +76,6 @@ sgpt() {
 
                     if [[ "$user_input" =~ ^[Yy]$ ]]; then
                         # Extract title and body for the PR from the temp file.
-                        # Assuming first line is title, rest is body.
                         local PR_TITLE=$(head -n 1 "$TEMP_FILE.msg")
                         local PR_BODY=$(tail -n +2 "$TEMP_FILE.msg")
 
@@ -104,11 +108,16 @@ sgpt() {
                     local TEMP_FILE=$(mktemp)
                     trap "rm -f '$TEMP_FILE'" EXIT
 
-                    git diff origin/main . > "$TEMP_FILE"
+                    # Fetch the latest changes from the remote without merging them
+                    git fetch origin main:main --no-tags
 
-                    sgpt "Create a PR title and a description based on the following changes. For the description, bullet points are better than paragraph form. I will expect the first line to be the title and the rest to be the description. No labels ("Title:", "Description:") are to be included in the response." < "$TEMP_FILE" > "$TEMP_FILE.msg"
+                    # Generate a diff of your current branch against the fetched remote main branch
+                    git diff FETCH_HEAD > "$TEMP_FILE"
 
-                    # Ensure correct separation and printing of title and description
+                    # Now, pass this diff to your sgpt tool as you were doing before
+                    sgpt "Create a PR title and a description based on the following changes. For the description, bullet points are better than paragraph form. I will expect the first line to be the title and the rest to be the description. No labels ('Title:', 'Description:') are to be included in the response." < "$TEMP_FILE" > "$TEMP_FILE.msg"
+
+                    # Continue with your process of extracting the title and body, then echoing or using them as needed
                     local PR_TITLE=$(head -n 1 "$TEMP_FILE.msg")
                     local PR_BODY=$(tail -n +2 "$TEMP_FILE.msg" | awk '{if(NR>1)print}' ORS='\n')
 
