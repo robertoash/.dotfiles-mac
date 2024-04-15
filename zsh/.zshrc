@@ -1,20 +1,4 @@
 # #################################
-# # Evals & Path setting
-# #################################
-
-# Brew
-eval "$(/usr/local/bin/brew shellenv)"
-# Thefuck
-eval $(thefuck --alias fuck)
-# Activate asdf
-. $(brew --prefix asdf)/libexec/asdf.sh
-# Load direnv
-eval "$(direnv hook zsh)"
-# Pipx path
-export PATH="$PATH:/Users/robertoash/.local/bin"
-
-
-# #################################
 # # Load on startup
 # #################################
 
@@ -159,3 +143,17 @@ zle -N _sgpt_zsh
 bindkey ^l _sgpt_zsh
 
 
+# #################################
+# # Evals & Path setting
+# #################################
+
+# Brew
+eval "$(/usr/local/bin/brew shellenv)"
+# Thefuck
+eval $(thefuck --alias fuck)
+# Activate asdf
+. $(brew --prefix asdf)/libexec/asdf.sh
+# Load direnv
+eval "$(direnv hook zsh)"
+# Pipx path
+export PATH="$PATH:/Users/robertoash/.local/bin"
