@@ -12,7 +12,7 @@ alias "bkup_packages"="~/.config/scripts/backup/package_requirements.py"
 # Brew
 alias bubu="brew update && brew outdated && brew upgrade && brew cleanup"
 # CNN
-alias cnn='yt-dlp --quiet https://www.livenewsnow.com/american/cnn-news-usa.html --add-header "Referer: https://www.livenewsnow.com/" --no-warnings --downloader ffmpeg --hls-use-mpegts -o - | mpv --really-quiet --quiet --no-terminal -'
+alias cnn='yt-dlp --quiet "https://www.livenewsnow.com/american/cnn-news-usa.html" --add-header "Referer: https://www.livenewsnow.com/" --no-warnings --downloader ffmpeg --hls-use-mpegts -o - | mpv --really-quiet --quiet --no-terminal --cache=yes --cache-secs=30 - &'
 # Exa
 alias ll="eza --all --color=always --icons --group-directories-first --git -Hah"
 alias lll="ll -l -a"
@@ -31,6 +31,8 @@ alias "lg"="lazygit"
 alias "mcon"="mullvad connect"
 alias "mdis"="mullvad disconnect"
 alias "mst"="mullvad status"
+# Zellij
+alias "zj"="zsh -l -c 'zellij attach --index 0 || zellij'"
 #Other
 alias vim="vim -u ~/.config/vim/vimrc"
 # Docker Scripts
