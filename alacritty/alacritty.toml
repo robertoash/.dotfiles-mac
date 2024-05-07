@@ -31,8 +31,15 @@ bindings = [
   { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
   { key = "Home", mods = "None", chars = "\u001bOH" },
   { key = "End", mods = "None", chars = "\u001bOF" },
-  { key = "8", mods = "Super|Control|Alt", chars = "["},
-  { key = "8", mods = "Super|Control|Alt", chars = "]"}
+  { key = "8", mods = "Alt", chars = "["},
+  { key = "9", mods = "Alt", chars = "]"},
+  { key = "3", mods = "Alt", chars = "£"},
+  { key = "2", mods = "Alt", chars = "@"},
+  { key = "4", mods = "Alt", chars = "$"},
+  { key = "7", mods = "Alt", chars = "|"},
+  { key = "8", mods = "Alt|Shift", chars = "{"},
+  { key = "9", mods = "Alt|Shift", chars = "}"},
+  { key = "å", mods = "Alt", chars = "~"},
 ]
 
 [mouse]
@@ -49,7 +56,7 @@ save_to_clipboard = true
 
 [shell]
 program = "/bin/zsh"
-args = ["-l", "-c", "zellij"]
+args = ["-l", "-c", "exec zsh"]
 
 [window]
 opacity = 1
