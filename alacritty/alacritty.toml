@@ -56,7 +56,7 @@ save_to_clipboard = true
 
 [shell]
 program = "/bin/zsh"
-args = ["-l", "-c", "exec zsh"]
+args = ["-l"]
 
 [window]
 opacity = 1

@@ -153,7 +153,7 @@ eval "$(/usr/local/bin/brew shellenv)"
 eval $(thefuck --alias fuck)
 # Activate asdf
 . $(brew --prefix asdf)/libexec/asdf.sh
-# Load direnv
-eval "$(direnv hook zsh)"
+# Activate direnv
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
 # Pipx path
 export PATH="$PATH:/Users/robertoash/.local/bin"
